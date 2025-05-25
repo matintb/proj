@@ -10,7 +10,7 @@ def json_res(requests):
     return JsonResponse({'name':'ali'})
 
 def index_view(requests):
-    return render(requests,'web/index.html')
+    return render(requests,'index.html')
 
 # return render(requests,'با رندر به سراغ فایل تمولیت رفت و از ان نام فایل را سرچ نمود')
 
