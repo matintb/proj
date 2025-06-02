@@ -10,13 +10,13 @@ def json_res(requests):
     return JsonResponse({'name':'ali'})
 
 def index_view(requests):
-    return render(requests,'index.html')
+    return render(requests,'website/index.html')
 
-# return render(requests,'با رندر به سراغ فایل تمولیت رفت و از ان نام فایل را سرچ نمود')
+# return render(requests,'با رندر به سراغ فایل تمپلیت رفت و از ان نام فایل را سرچ نمود')
 
 def about_view(requests):
-    return render(requests,'about.html')
+    return render(requests,'website/about.html')
 
 def contact_view(requests):
-    return render(requests,'contact.html')
+    return render(requests,'website/contact.html')
 
