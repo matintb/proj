@@ -5,6 +5,7 @@ def blog_home(requests):
     return render(requests,'blog/blog-home.html')
 
 def blog_single(requests):
-    return render(requests,'blog/blog-single.html')
+    content = {'title':'bitcoin', 'text':'bitcoin is the best', 'writer':'great Matin'}
+    return render(requests,'blog/blog-single.html',content)
 
 

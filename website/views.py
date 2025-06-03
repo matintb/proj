@@ -20,3 +20,6 @@ def about_view(requests):
 def contact_view(requests):
     return render(requests,'website/contact.html')
 
+def test_view(requests):
+    return render(requests,'website/test.html',{'fname':'matin', 'lname':'tb'})
+
