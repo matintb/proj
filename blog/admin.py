@@ -10,8 +10,9 @@ class PostAdmin(admin.ModelAdmin):
     # faghat title ghabel moshahede bashe dar admin
     # fields = (title,)
     # exclude = (title,)
-    list_display = ('title','status','created_date','published_date')
-    list_filter = ('status',)
+    list_display = ('title','author','status','created_date','published_date')
+    list_filter = ('status','author')
+    # list_filter = ('status',)
     # ordering = ('created_date',)
     search_fields = ('title','content')
     # ordering = ('-created_date',)

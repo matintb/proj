@@ -12,7 +12,10 @@ def blog_home(requests):
 #     return render(requests,'blog/blog-single.html',content)
 
 def blog_single(requests,pid):
-    mypost = post.objects.get(id=pid)
+    # filter kardim ta karbar be sorat dasti natone be post hay publish nashode dast peyda kone
+    posts = post.objects.filter(status=1)
+    mypost = get_object_or_404(posts,pk=pid)
+    # mypost = post.objects.get(id=pid)
     context = {'mypost':mypost}
     return render(requests,'blog/blog-single.html',context)
 
