@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from blog.models import post
 
 def blog_home(requests):
@@ -7,12 +7,30 @@ def blog_home(requests):
     context = {'posts':posts}
     return render(requests,'blog/blog-home.html',context)
 
-def blog_single(requests):
-    content = {'title':'bitcoin', 'text':'bitcoin is the best', 'writer':'great Matin'}
-    return render(requests,'blog/blog-single.html',content)
+# def blog_single(requests):
+#     content = {'title':'bitcoin', 'text':'bitcoin is the best', 'writer':'great Matin'}
+#     return render(requests,'blog/blog-single.html',content)
+
+def blog_single(requests,pid):
+    mypost = post.objects.get(id=pid)
+    context = {'mypost':mypost}
+    return render(requests,'blog/blog-single.html',context)
 
 def test_blog(requests):
     posts = post.objects.all()
     # posts = post.objects.filter(satus=1)
     context = {'posts':posts}
     return render(requests,'blog/testblog.html',context)
+
+
+# def dynamictest(requests,name,family_name,age):   
+#     context = {'name':name,'family_name':family_name,'age':age}
+#     return render(requests,'blog/dynamictest.html',context)
+
+def dynamictest(requests,pid): 
+    posts = post.objects.all()
+    # mypost = post.objects.get(id=pid)
+    # pk : primary key
+    mypost = get_object_or_404(post,pk=pid)
+    context = {'pid':pid, 'posts':posts,'mypost':mypost}
+    return render(requests,'blog/dynamictest.html',context)
