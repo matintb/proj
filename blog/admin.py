@@ -1,8 +1,8 @@
 from django.contrib import admin
-from blog.models import post
+from blog.models import post,Category
 
 # Register your models here.
-@admin.register(post)
+# @admin.register(post)
 class PostAdmin(admin.ModelAdmin):
     # dar site admin mitavan bar asas zaman sakht negah kard
     date_hierarchy = 'created_date'
@@ -16,4 +16,6 @@ class PostAdmin(admin.ModelAdmin):
     # ordering = ('created_date',)
     search_fields = ('title','content')
     # ordering = ('-created_date',)
-    # admin.site.register(post,PostAdmin)
+
+admin.site.register(post,PostAdmin)
+admin.site.register(Category)
