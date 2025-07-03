@@ -26,9 +26,16 @@
     <br>
     {% for post in posts %}
         <p>
-        {{ post }}
+        <!-- {{ post.content|snippet }}... -->
+        {{post.content|snippet:10}}
         </p>
     {% endfor %}
+
+    <h1>-----------</h1>
+
+    <p>
+        popular posts are : {% popularposts %}
+    </p>
     
 </body>
 </html>
