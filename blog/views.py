@@ -25,6 +25,13 @@ def test_blog(requests):
     context = {'posts':posts}
     return render(requests,'blog/testblog.html',context)
 
+def blog_category(requests,cat_name):
+    posts = post.objects.filter(status=1)
+    # looks for name __name insted of id
+    posts = posts.filter(category__name=cat_name)  
+    context = {'posts':posts}
+    return render(requests,'blog/blog-home.html',context)
+
 
 # def dynamictest(requests,name,family_name,age):   
 #     context = {'name':name,'family_name':family_name,'age':age}

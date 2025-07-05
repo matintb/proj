@@ -9,6 +9,7 @@ urlpatterns = [
     path('', blog_home, name='home' ),
     # path('single/', blog_single, name='single' ),
     path('<int:pid>', blog_single, name='single' ),
+    path('category/<str:cat_name>', blog_category, name='category' ),
     path('testblog/', test_blog, name='testblog' ),
     # path('post-<int:pid>', dynamictest, name='dynamictest' )
     # path('<str:name>/<str:family_name>/<int:age>', dynamictest, name='dynamictest' )
