@@ -11,6 +11,7 @@ urlpatterns = [
     path('<int:pid>', blog_single, name='single' ),
     path('category/<str:cat_name>', blog_home, name='category' ),
     path('author/<str:author_username>', blog_home, name='author' ),
+    path('search/', blog_search, name='search' ),
     path('testblog/', test_blog, name='testblog' ),
     # path('post-<int:pid>', dynamictest, name='dynamictest' )
     # path('<str:name>/<str:family_name>/<int:age>', dynamictest, name='dynamictest' )

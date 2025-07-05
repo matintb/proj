@@ -50,3 +50,16 @@ def dynamictest(requests,pid):
     mypost = get_object_or_404(post,pk=pid)
     context = {'pid':pid, 'posts':posts,'mypost':mypost}
     return render(requests,'blog/dynamictest.html',context)
+
+def blog_search(requests):
+    # requests.__dict__ -> shows objects in requests
+    # print(requests.__dict__)
+    posts = post.objects.filter(status=1)    
+    if requests.method == 'GET':
+        # print('get request')
+        # s:= -> if there is a s print it in s
+        if s:= requests.GET.get('s'):
+            posts = posts.filter(content__contains=s)
+        
+    context = {'posts':posts}
+    return render(requests,'blog/blog-home.html',context)
