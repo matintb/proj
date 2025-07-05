@@ -1,11 +1,20 @@
 from django.shortcuts import render,get_object_or_404
 from blog.models import post
 
-def blog_home(requests):
+def blog_home(requests,cat_name=None):
     # posts = post.objects.all()
     posts = post.objects.filter(status=1)
+    if cat_name:
+        posts = posts.filter(category__name=cat_name) 
     context = {'posts':posts}
     return render(requests,'blog/blog-home.html',context)
+
+# def blog_category(requests,cat_name):
+#     posts = post.objects.filter(status=1)
+#     # looks for name __name insted of id
+#     posts = posts.filter(category__name=cat_name)  
+#     context = {'posts':posts}
+#     return render(requests,'blog/blog-home.html',context)
 
 # def blog_single(requests):
 #     content = {'title':'bitcoin', 'text':'bitcoin is the best', 'writer':'great Matin'}
@@ -24,13 +33,6 @@ def test_blog(requests):
     # posts = post.objects.filter(satus=1)
     context = {'posts':posts}
     return render(requests,'blog/testblog.html',context)
-
-def blog_category(requests,cat_name):
-    posts = post.objects.filter(status=1)
-    # looks for name __name insted of id
-    posts = posts.filter(category__name=cat_name)  
-    context = {'posts':posts}
-    return render(requests,'blog/blog-home.html',context)
 
 
 # def dynamictest(requests,name,family_name,age):   
