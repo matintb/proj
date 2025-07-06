@@ -1,7 +1,8 @@
 from django.shortcuts import render,get_object_or_404
 from blog.models import post
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage``
 
-def blog_home(requests,**kwargs):
+def blog_home(request,**kwargs):
     # posts = post.objects.all()
     posts = post.objects.filter(status=1)
     # if not len(kwargs)>0:
@@ -10,56 +11,65 @@ def blog_home(requests,**kwargs):
         posts = posts.filter(category__name=kwargs['cat_name']) 
     if kwargs.get('author_username') != None:
         posts = posts.filter(author__username = kwargs['author_username'])
+    # paginator ( input , 3 = count of posts in one page   ) 
+    posts = Paginator(posts,3)
+    try:
+        page_number = request.GET.get('page')
+        posts = posts.get_page(page_number)
+    except PageNotAnInteger:
+        posts = posts.get_page(1)
+    except EmptyPage:
+        posts = posts.get_page(1)
     context = {'posts':posts}
-    return render(requests,'blog/blog-home.html',context)
+    return render(request,'blog/blog-home.html',context)
 
-# def blog_category(requests,cat_name):
+# def blog_category(request,cat_name):
 #     posts = post.objects.filter(status=1)
 #     # looks for name __name insted of id
 #     posts = posts.filter(category__name=cat_name)  
 #     context = {'posts':posts}
-#     return render(requests,'blog/blog-home.html',context)
+#     return render(request,'blog/blog-home.html',context)
 
-# def blog_single(requests):
+# def blog_single(request):
 #     content = {'title':'bitcoin', 'text':'bitcoin is the best', 'writer':'great Matin'}
-#     return render(requests,'blog/blog-single.html',content)
+#     return render(request,'blog/blog-single.html',content)
 
-def blog_single(requests,pid):
+def blog_single(request,pid):
     # filter kardim ta karbar be sorat dasti natone be post hay publish nashode dast peyda kone
     posts = post.objects.filter(status=1)
     mypost = get_object_or_404(posts,pk=pid)
     # mypost = post.objects.get(id=pid)
     context = {'mypost':mypost}
-    return render(requests,'blog/blog-single.html',context)
+    return render(request,'blog/blog-single.html',context)
 
-def test_blog(requests):
+def test_blog(request):
     posts = post.objects.all()
     # posts = post.objects.filter(satus=1)
     context = {'posts':posts}
-    return render(requests,'blog/testblog.html',context)
+    return render(request,'blog/testblog.html',context)
 
 
-# def dynamictest(requests,name,family_name,age):   
+# def dynamictest(request,name,family_name,age):   
 #     context = {'name':name,'family_name':family_name,'age':age}
-#     return render(requests,'blog/dynamictest.html',context)
+#     return render(request,'blog/dynamictest.html',context)
 
-def dynamictest(requests,pid): 
+def dynamictest(request,pid): 
     posts = post.objects.all()
     # mypost = post.objects.get(id=pid)
     # pk : primary key
     mypost = get_object_or_404(post,pk=pid)
     context = {'pid':pid, 'posts':posts,'mypost':mypost}
-    return render(requests,'blog/dynamictest.html',context)
+    return render(request,'blog/dynamictest.html',context)
 
-def blog_search(requests):
-    # requests.__dict__ -> shows objects in requests
-    # print(requests.__dict__)
+def blog_search(request):
+    # request.__dict__ -> shows objects in request
+    # print(request.__dict__)
     posts = post.objects.filter(status=1)    
-    if requests.method == 'GET':
+    if request.method == 'GET':
         # print('get request')
         # s:= -> if there is a s print it in s
-        if s:= requests.GET.get('s'):
+        if s:= request.GET.get('s'):
             posts = posts.filter(content__contains=s)
         
     context = {'posts':posts}
-    return render(requests,'blog/blog-home.html',context)
+    return render(request,'blog/blog-home.html',context)
