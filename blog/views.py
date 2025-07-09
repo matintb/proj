@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from blog.models import post
-from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage``
+from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 
 def blog_home(request,**kwargs):
     # posts = post.objects.all()
