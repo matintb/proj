@@ -36,6 +36,19 @@
     <p>
         popular posts are : {% popularposts %}
     </p>
+    <h1>------------------------------------------------------</h1>
+    <form action="{%  url 'blog:testblog'  %}" method="post"><br>
+        {% csrf_token %}
+        <label>name:</label>
+        <input type="text" name="name"><br>
+        <label>email:</label>
+        <input type="email" name="email"><br>
+        <label>subject:</label>
+        <input type="text" name="subject"><br>
+        <label>message:</label>
+        <input type="text" name="message"><br>
+        <button type="submit">submit</button>
+    </form>
     
 </body>
 </html>

@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from blog.models import post
+from website.models import contact
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 
 def blog_home(request,**kwargs):
@@ -43,6 +44,22 @@ def blog_single(request,pid):
     return render(request,'blog/blog-single.html',context)
 
 def test_blog(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        c = contact()
+        c.Name = name 
+        c.email = email
+        c.subject = subject
+        c.message = message
+        c.save()
+        
+        print(name,email,subject,message)
+    if request.method == 'GET':
+        print("GET")
+        
     posts = post.objects.all()
     # posts = post.objects.filter(satus=1)
     context = {'posts':posts}
