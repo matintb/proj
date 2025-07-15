@@ -1,7 +1,10 @@
+# from django.http import HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render,get_object_or_404
 from blog.models import post
 from website.models import contact
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+from website.forms import NameForm
 
 def blog_home(request,**kwargs):
     # posts = post.objects.all()
@@ -90,3 +93,25 @@ def blog_search(request):
         
     context = {'posts':posts}
     return render(request,'blog/blog-home.html',context)
+
+def test_form(request):
+    if request.method == 'POST':
+        form = NameForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            subject = form.cleaned_data['subject']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            c = contact()
+            c.Name = name 
+            c.email = email
+            c.subject = subject
+            c.message = message
+            c.save()
+            return HttpResponse('done')
+        else:
+            return HttpResponse('not valid')
+        
+    form = NameForm()
+    return render(request,'blog/testform.html', {'form':form})
+

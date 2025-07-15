@@ -13,6 +13,7 @@ urlpatterns = [
     path('author/<str:author_username>', blog_home, name='author' ),
     path('search/', blog_search, name='search' ),
     path('testblog/', test_blog, name='testblog' ),
+    path('testform/', test_form, name='testform' ),
     # path('post-<int:pid>', dynamictest, name='dynamictest' )
     # path('<str:name>/<str:family_name>/<int:age>', dynamictest, name='dynamictest' )
     # path('<str:name>/lastname/<str:family_name>/age/<int:age>', dynamictest, name='dynamictest' )
