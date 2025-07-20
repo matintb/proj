@@ -4,7 +4,7 @@ from django.shortcuts import render,get_object_or_404
 from blog.models import post
 from website.models import contact
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
-from website.forms import NameForm
+from website.forms import NameForm,ContactForm
 
 def blog_home(request,**kwargs):
     # posts = post.objects.all()
@@ -96,22 +96,26 @@ def blog_search(request):
 
 def test_form(request):
     if request.method == 'POST':
-        form = NameForm(request.POST)
+        # form = NameForm(request.POST)
+        form = ContactForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            subject = form.cleaned_data['subject']
-            email = form.cleaned_data['email']
-            message = form.cleaned_data['message']
-            c = contact()
-            c.Name = name 
-            c.email = email
-            c.subject = subject
-            c.message = message
-            c.save()
+            # name = form.cleaned_data['Name']
+            # subject = form.cleaned_data['subject']
+            # email = form.cleaned_data['email']
+            # message = form.cleaned_data['message']
+            # c = contact()
+            # c.Name = name 
+            # c.email = email
+            # c.subject = subject
+            # c.message = message
+            # c.save()
+            # instead of all lines above just one line does the job
+            form.save()
             return HttpResponse('done')
         else:
             return HttpResponse('not valid')
         
-    form = NameForm()
+    # form = NameForm()
+    form = ContactForm()
     return render(request,'blog/testform.html', {'form':form})
 
