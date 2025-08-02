@@ -136,7 +136,7 @@
             </a>
             <p class="excert">
               <!-- {{ post.snippets }} -->
-              {{ post.content|truncatechars:30 }}
+              {{ post.content|truncatechars:30|safe }}
               _ {{ post.image }} _
               {{ post.image.url }}
 
