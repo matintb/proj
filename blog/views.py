@@ -5,6 +5,8 @@ from blog.models import post
 from website.models import contact
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from website.forms import NameForm,ContactForm
+from taggit.models import Tag
+
 
 def blog_home(request,**kwargs):
     # posts = post.objects.all()
@@ -15,6 +17,8 @@ def blog_home(request,**kwargs):
         posts = posts.filter(category__name=kwargs['cat_name']) 
     if kwargs.get('author_username') != None:
         posts = posts.filter(author__username = kwargs['author_username'])
+    if kwargs.get('tag_name') != None:
+        posts = posts.filter(tags__name__in=[kwargs['tag_name']])
     # paginator ( input , 3 = count of posts in one page   ) 
     posts = Paginator(posts,3)
     try:
@@ -24,7 +28,8 @@ def blog_home(request,**kwargs):
         posts = posts.get_page(1)
     except EmptyPage:
         posts = posts.get_page(1)
-    context = {'posts':posts}
+    tags = Tag.objects.all()
+    context = {'posts':posts, 'tags':tags}
     return render(request,'blog/blog-home.html',context)
 
 # def blog_category(request,cat_name):

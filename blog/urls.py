@@ -11,6 +11,7 @@ urlpatterns = [
     path('<int:pid>', blog_single, name='single' ),
     path('category/<str:cat_name>', blog_home, name='category' ),
     path('author/<str:author_username>', blog_home, name='author' ),
+    path('tag/<str:tag_name>', blog_home, name='tag' ),
     path('search/', blog_search, name='search' ),
     path('testblog/', test_blog, name='testblog' ),
     path('testform/', test_form, name='testform' ),
