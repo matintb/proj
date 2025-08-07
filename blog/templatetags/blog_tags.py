@@ -1,5 +1,5 @@
 from django import template
-from blog.models import post,Category
+from blog.models import post,Category,comments
 
 
 # must create a register obj to be valid
@@ -10,6 +10,16 @@ register = template.Library()
 def function():
     posts = post.objects.filter(status=1).count()
     return posts
+
+@register.simple_tag(name='comments_count')
+def comments_count(pid):
+    if not pid:
+        return 0
+    try:
+        return comments.objects.filter(Post=pid, approved=True).count()
+    except post.DoesNotExist:
+        return 0
+
 
 @register.filter
 def snippet(value,arg=15):

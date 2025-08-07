@@ -1,7 +1,7 @@
 # from django.http import HttpResponse
 from django.http import HttpResponse
 from django.shortcuts import render,get_object_or_404
-from blog.models import post
+from blog.models import post, comments
 from website.models import contact
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from website.forms import NameForm,ContactForm
@@ -48,7 +48,8 @@ def blog_single(request,pid):
     posts = post.objects.filter(status=1)
     mypost = get_object_or_404(posts,pk=pid)
     # mypost = post.objects.get(id=pid)
-    context = {'mypost':mypost}
+    comment = comments.objects.filter(Post=mypost.id,approved=True).order_by('-created_date')
+    context = {'mypost':mypost,'comment':comment}
     return render(request,'blog/blog-single.html',context)
 
 def test_blog(request):

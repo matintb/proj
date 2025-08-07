@@ -57,3 +57,6 @@ class comments(models.Model):
         ordering = ['created_date']
         verbose_name = 'نظر'
         verbose_name_plural = 'نظرات'
+
+    def __str__(self):
+        return self.name
