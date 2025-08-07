@@ -1,6 +1,8 @@
 from django.urls import path
 from blog.views import *
 
+from blog.feeds import LatestEntriesFeed
+
 
 app_name = 'blog'
 
@@ -14,6 +16,7 @@ urlpatterns = [
     path('tag/<str:tag_name>', blog_home, name='tag' ),
     path('search/', blog_search, name='search' ),
     path('testblog/', test_blog, name='testblog' ),
+    path("rss/feed/", LatestEntriesFeed()),
     path('testform/', test_form, name='testform' ),
     # path('post-<int:pid>', dynamictest, name='dynamictest' )
     # path('<str:name>/<str:family_name>/<int:age>', dynamictest, name='dynamictest' )
