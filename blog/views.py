@@ -5,7 +5,9 @@ from blog.models import post, comments
 from website.models import contact
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from website.forms import NameForm,ContactForm
+from blog.forms import CommentForm
 from taggit.models import Tag
+from django.contrib import messages
 
 
 def blog_home(request,**kwargs):
@@ -44,12 +46,20 @@ def blog_home(request,**kwargs):
 #     return render(request,'blog/blog-single.html',content)
 
 def blog_single(request,pid):
+    if request.method == "POST": 
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request,messages.SUCCESS,'succed')
+        else:
+            messages.add_message(request,messages.ERROR,'error')
     # filter kardim ta karbar be sorat dasti natone be post hay publish nashode dast peyda kone
     posts = post.objects.filter(status=1)
     mypost = get_object_or_404(posts,pk=pid)
     # mypost = post.objects.get(id=pid)
     comment = comments.objects.filter(Post=mypost.id,approved=True).order_by('-created_date')
-    context = {'mypost':mypost,'comment':comment}
+    form = CommentForm()
+    context = {'mypost':mypost,'comment':comment, 'form':form}
     return render(request,'blog/blog-single.html',context)
 
 def test_blog(request):
