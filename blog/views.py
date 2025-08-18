@@ -8,8 +8,10 @@ from website.forms import NameForm,ContactForm
 from blog.forms import CommentForm
 from taggit.models import Tag
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def blog_home(request,**kwargs):
     # posts = post.objects.all()
     posts = post.objects.filter(status=1)
