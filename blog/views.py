@@ -1,6 +1,7 @@
 # from django.http import HttpResponse
-from django.http import HttpResponse
-from django.shortcuts import render,get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render,get_object_or_404
+from django.urls import reverse
 from blog.models import post, comments
 from website.models import contact
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
@@ -11,7 +12,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
+# @login_required
 def blog_home(request,**kwargs):
     # posts = post.objects.all()
     posts = post.objects.filter(status=1)
@@ -59,10 +60,14 @@ def blog_single(request,pid):
     posts = post.objects.filter(status=1)
     mypost = get_object_or_404(posts,pk=pid)
     # mypost = post.objects.get(id=pid)
-    comment = comments.objects.filter(Post=mypost.id,approved=True).order_by('-created_date')
-    form = CommentForm()
-    context = {'mypost':mypost,'comment':comment, 'form':form}
-    return render(request,'blog/blog-single.html',context)
+    if not mypost.login_require:
+        comment = comments.objects.filter(Post=mypost.id,approved=True).order_by('-created_date')
+        form = CommentForm()
+        context = {'mypost':mypost,'comment':comment, 'form':form}
+        return render(request,'blog/blog-single.html',context)
+    else:
+        return HttpResponseRedirect(reverse('accounts:login'))
+
 
 def test_blog(request):
     if request.method == 'POST':

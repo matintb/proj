@@ -182,6 +182,12 @@
             {% csrf_token %}
 
             <input type='hidden' name='Post' value={{mypost.id}}>
+            
+            {% if request.user.is_authenticated %}
+            <input type='hidden' name='name' value={{request.user.first_name}}>
+            <input type='hidden' name='email' value={{request.user.email}}>
+
+            {% else %}
             <div class="form-group form-inline">
               <div class="form-group col-lg-6 col-md-12 name">
                 <input
@@ -204,6 +210,7 @@
                 />
               </div>
             </div>
+            {% endif %}
             <div class="form-group">
               <input
                 type="text"

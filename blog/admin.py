@@ -14,7 +14,7 @@ class PostAdmin(SummernoteModelAdmin):
     # faghat title ghabel moshahede bashe dar admin
     # fields = (title,)
     # exclude = (title,)
-    list_display = ('title','author','status','created_date','published_date')
+    list_display = ('title','author','status','login_require','created_date','published_date')
     list_filter = ('status','author')
     # list_filter = ('status',)
     # ordering = ('created_date',)
