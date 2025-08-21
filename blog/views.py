@@ -142,3 +142,11 @@ def test_form(request):
     form = ContactForm()
     return render(request,'blog/testform.html', {'form':form})
 
+
+def adwaam(one, two):
+    """
+    Purpose: one
+    """
+    
+# end def
+
